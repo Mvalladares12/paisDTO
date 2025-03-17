@@ -51,15 +51,7 @@ public class DepartamentoResource {
     @PUT
     @Path("{id}")
     @Transactional
-    public Departamento update(@PathParam("id")Long id, Departamento departamento) {
-        var entity = departamentoRepository.findById(id);
-        if (entity != null) {
-            entity.setCodigo(departamento.getCodigo());
-            entity.setNombre(departamento.getNombre());
-            departamentoRepository.persist(entity);
-            return entity;
-        }else {
-            throw new NotFoundException();
-        }
+    public CreateDepartamentoDTO update(@PathParam("id")Long id, CreateDepartamentoDTO depa) {
+        return departamentoRepository.update(id,depa);
     }
 }

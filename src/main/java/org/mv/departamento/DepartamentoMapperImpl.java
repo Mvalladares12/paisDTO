@@ -19,4 +19,17 @@ public class DepartamentoMapperImpl implements DepartamentoMapper {
         departamento.setCodigo(dto.codigo());
         return departamento;
     }
+
+    @Override
+    public void updateDepartamento(CreateDepartamentoDTO dto, Departamento depa) {
+        depa.setNombre(dto.nombre());
+        depa.setCodigo(dto.codigo());
+    }
+
+    @Override
+    public CreateDepartamentoDTO present(Departamento departamento) {
+        return new  CreateDepartamentoDTO(departamento.getNombre(),departamento.getCodigo());
+    }
+
+
 }
