@@ -10,8 +10,15 @@ import java.util.List;
 @Path("/distrito")
 public class DistritoResource {
 
-    @Inject
+
     DistritoRepository distritoRepository;
+    DistritoMapper distritoMapper;
+
+    @Inject
+    public DistritoResource(DistritoRepository distritoRepository, DistritoMapper distritoMapper) {
+        this.distritoRepository = distritoRepository;
+        this.distritoMapper = distritoMapper;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -28,8 +35,9 @@ public class DistritoResource {
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Distrito distrito) {
-        distritoRepository.persist(distrito);
+    public void create(CreateDistritoDTO distrito) {
+        var entity=distritoMapper.createDistrito(distrito);
+        distritoRepository.persist(entity);
     }
 
     @DELETE

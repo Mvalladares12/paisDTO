@@ -10,11 +10,19 @@ import java.util.List;
 @Path("/departamento")
 public class DepartamentoResource {
 
-    @Inject
+
     DepartamentoRepository departamentoRepository;
 
+    DepartamentoMapper departamentoMapper;
+
+    @Inject
+    public DepartamentoResource(DepartamentoRepository departamentoRepository, DepartamentoMapper departamentoMapper) {
+        this.departamentoRepository = departamentoRepository;
+        this.departamentoMapper = departamentoMapper;
+    }
+
     @GET
-    //@Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Departamento> findAll() {
         return departamentoRepository.listAll();
     }
@@ -28,8 +36,9 @@ public class DepartamentoResource {
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Departamento departamento) {
-        departamentoRepository.persist(departamento);
+    public void create(CreateDepartamentoDTO departamento) {
+        var entity=departamentoMapper.createDepartamento(departamento);
+        departamentoRepository.persist(entity);
     }
 
     @DELETE
